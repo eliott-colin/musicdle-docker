@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./musicdle-backend
+    container_name: backend_api
+    restart: always
+    ports:
+      - "3005:3005"
+    environment:
+      DATABASE_URL: postgres://admin:admin@db:5432/mydb
+    depends_on:
+      - db
+
+  frontend:
+    build: ./musicdle-frontend
+    container_name: frontend_app
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
