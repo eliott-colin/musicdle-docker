@@ -1,0 +1,6 @@
+[submodule "musicdle-frontend"]
+	path = musicdle-frontend
+	url = https://github.com/eliott-colin/musicdle-frontend
+[submodule "musicdle-backend"]
+	path = musicdle-backend
+	url = https://github.com/TatianaAll/musicdle-backend
