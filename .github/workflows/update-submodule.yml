@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PARENT_REPO_TOKEN }}
 
       - name: Update submodules
         run: |
@@ -20,4 +20,4 @@ jobs:
           git config user.name "GitHub Actions"
           git add .
           git diff --staged --quiet || git commit -m "chore: update submodules"
-          git push
+          git push https://x-access-token:${{ secrets.PARENT_REPO_TOKEN }}@github.com/eliott-colin/musicdle-docker.git
