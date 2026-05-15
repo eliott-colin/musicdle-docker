@@ -29,8 +29,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /srv/projects/musicdle
+            cd ../../
+            cd /srv/projects/musicdle-docker
             git pull
-            git submodule update --remote --checkout
-            cd /srv
-            docker compose up -d --build musicdle-front musicdle-back
+            git submodule update --remote musicdle-front
+            git submodule update --remote musicdle-backend
+            cd ../../
+            docker compose down
+            docker compose up -d --build
