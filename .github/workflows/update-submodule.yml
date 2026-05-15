@@ -1,4 +1,4 @@
-name: Update submodules
+name: Update submodules and deploy
 
 on:
   repository_dispatch:
@@ -16,10 +16,21 @@ jobs:
       - name: Update submodules
         run: |
           git submodule update --remote --checkout
-          git submodule update --remote musicdle-backend
-          git submodule update --remote musicdle-frontend
           git config user.email "ci@github.com"
           git config user.name "GitHub Actions"
           git add .
           git diff --staged --quiet || git commit -m "chore: update submodules"
           git push https://x-access-token:${{ secrets.PARENT_REPO_TOKEN }}@github.com/eliott-colin/musicdle-docker.git
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /srv/projects/musicdle
+            git pull
+            git submodule update --remote --checkout
+            cd /srv
+            docker compose up -d --build musicdle-front musicdle-back
