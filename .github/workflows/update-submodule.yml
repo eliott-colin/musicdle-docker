@@ -16,6 +16,8 @@ jobs:
       - name: Update submodules
         run: |
           git submodule update --remote --checkout
+          git submodule update --remote musicdle-backend
+          git submodule update --remote musicdle-frontend
           git config user.email "ci@github.com"
           git config user.name "GitHub Actions"
           git add .
