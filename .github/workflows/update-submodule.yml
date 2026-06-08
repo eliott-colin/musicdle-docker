@@ -31,7 +31,6 @@ jobs:
           script: |
             cd ../../
             cd /srv/projects/musicdle-docker
-            git pull origin main
             git submodule update --remote --force musicdle-frontend
             git submodule update --remote --force musicdle-backend
             cd ../../
