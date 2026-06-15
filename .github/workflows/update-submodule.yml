@@ -32,8 +32,7 @@ jobs:
             cd ../../
             cd /srv/projects/musicdle-docker
             git pull
-            git submodule update --remote musicdle-frontend
-            git submodule update --remote musicdle-backend
+            git submodule update --remote --merge
             cd ../../
             docker compose down
             docker compose up -d --build
